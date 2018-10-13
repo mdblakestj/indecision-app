@@ -4,7 +4,8 @@ console.log("hello react");
 
 var app = {
   title: 'Indecision App',
-  subtitle: 'Here it is'
+  subtitle: 'subtitle',
+  options: ['one', 'two']
 
 };
 var template = React.createElement(
@@ -15,11 +16,12 @@ var template = React.createElement(
     null,
     app.title
   ),
-  React.createElement(
+  app.subtitle && React.createElement(
     'p',
     null,
     app.subtitle
   ),
+  app.options.length > 0 ? "Here are your options:" : "No options",
   React.createElement(
     'ol',
     null,
@@ -41,41 +43,4 @@ var template = React.createElement(
   )
 );
 
-var user = {
-  name: 'Dan',
-  age: 20,
-  location: 'Boston'
-};
-
-var userName = 'Mike';
-var userAge = 30;
-var userLocation = "Boston";
-
-var templateTwo = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    user.name
-  ),
-  React.createElement(
-    'p',
-    null,
-    'Age: ',
-    user.age
-  ),
-  React.createElement(
-    'p',
-    null,
-    'Locaton: ',
-    userLocation
-  )
-);
-
-//create template
-//render template
-//template 2 variable root div h1 tag Name ptag age: age ptag location
-//render template 2 instead template 1
 var appRoot = document.getElementById('app');
-ReactDOM.render(template, appRoot);
