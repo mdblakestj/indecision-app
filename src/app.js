@@ -6,6 +6,12 @@ const app = {
   options: []
 
 }
+const onMakeDecision = () => {
+  const rnum = Math.floor(Math.random() * app.options.length);
+  const option = app.options[rnum];
+  alert(option);
+}
+const numbers = [55,100,1000];
 
 const renderIt = () => {
   const template = (
@@ -13,12 +19,17 @@ const renderIt = () => {
     <h1>{app.title}</h1>
     {app.subtitle && <p>{app.subtitle}</p>}
     {app.options.length > 0 ? "Here are your options:": "No options"}
-    <p>{app.options.length}</p>
+    <button disabled={app.options.length === 0} onClick={onMakeDecision}>What Should i do?</button>
     <button onClick={removeAll}>Remove All</button>
+    {
+
+    }
     <ol>
-      <li>Item one</li>
-      <li>Item two</li>
-      <li>Item three</li>
+      {app.options.map((option) =>{
+        return <li key={option}>{option}</li>
+
+      })}
+
     </ol>
     <form onSubmit={onFormSubmit}>
         <input type="text" name="option"/>

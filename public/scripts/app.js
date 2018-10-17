@@ -8,6 +8,12 @@ var app = {
   options: []
 
 };
+var onMakeDecision = function onMakeDecision() {
+  var rnum = Math.floor(Math.random() * app.options.length);
+  var option = app.options[rnum];
+  alert(option);
+};
+var numbers = [55, 100, 1000];
 
 var renderIt = function renderIt() {
   var template = React.createElement(
@@ -25,9 +31,9 @@ var renderIt = function renderIt() {
     ),
     app.options.length > 0 ? "Here are your options:" : "No options",
     React.createElement(
-      'p',
-      null,
-      app.options.length
+      'button',
+      { disabled: app.options.length === 0, onClick: onMakeDecision },
+      'What Should i do?'
     ),
     React.createElement(
       'button',
@@ -37,21 +43,13 @@ var renderIt = function renderIt() {
     React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        'Item one'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item two'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item three'
-      )
+      app.options.map(function (option) {
+        return React.createElement(
+          'li',
+          { key: option },
+          option
+        );
+      })
     ),
     React.createElement(
       'form',
