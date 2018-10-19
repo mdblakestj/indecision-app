@@ -1,61 +1,39 @@
-"use strict";
+'use strict';
 
-var appRoot = document.getElementById('app');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var options = {
-  message: "Show details",
-  messageTwo: "Hide details",
-  details: ""
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var counter = true;
-// const toggle = () => {
-//   if (counter){
-//     return <button onClick={toggle}> Hide Details </button>
-//     <p>Here are the details</p>
-//   } else {
-//     return <button onClick={toggle}>Show Details</button>
-//   }
-// }
+var Person = function () {
+  function Person() {
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Default';
+    var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '0';
 
-var toggle = function toggle() {
-  if (counter) {
-    options.message = "Hide Details";
-    options.details = "Here are the deets";
-    counter = false;
-    renderIt();
-  } else {
-    options.message = "Show details";
-    counter = true;
-    options.details = "";
-    renderIt();
+    _classCallCheck(this, Person);
+
+    this.name = name;
+    this.age = age;
   }
-};
 
-var renderIt = function renderIt() {
-  var template = React.createElement(
-    "div",
-    null,
-    React.createElement(
-      "h1",
-      null,
-      "Visibility Toggle"
-    ),
-    React.createElement(
-      "button",
-      { onClick: toggle },
-      options.message
-    ),
-    React.createElement(
-      "h1",
-      null,
-      options.details
-    )
-  );
-  ReactDOM.render(template, appRoot);
-};
+  _createClass(Person, [{
+    key: 'greetings',
+    value: function greetings() {
+      return "Hey!";
+    }
+  }, {
+    key: 'getDescription',
+    value: function getDescription() {
+      return this.name + ' is ' + this.age + ' year(s) old';
+    }
+  }]);
 
-renderIt();
+  return Person;
+}();
 
-//show details
-//hide details
+var me = new Person('Dan Schwartz', 27);
+
+console.log(me.getDescription());
+console.log('Hat');
+
+//add a second optional item age with default zero
+//getDescription return string - Dan Schwartz is Age year(s) old.
