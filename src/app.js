@@ -46,11 +46,17 @@ class Action extends React.Component {
 //handle add option - fetch value if it exists alert itto screen
 
 
-
+const obj = {
+  name:'Hats'
+}
 
 class Options extends React.Component {
+  constructor(props){
+    super(props);
+    this.removeAll = this.removeAll.bind(this);
+  }
   removeAll(){
-    alert('Remove All')
+    alert(this.props.options)
   }
   render() {
     return (
