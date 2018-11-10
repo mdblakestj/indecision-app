@@ -17,10 +17,11 @@ var IndecisionApp = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
     _this.handleDelete = _this.handleDelete.bind(_this);
+    _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     _this.addOption = _this.addOption.bind(_this);
     _this.handlePick = _this.handlePick.bind(_this);
     _this.state = {
-      options: []
+      options: props.options
     };
     return _this;
   }
@@ -34,9 +35,7 @@ var IndecisionApp = function (_React$Component) {
         return 'This option already exists';
       } else {
         this.setState(function (prevState) {
-          return {
-            options: prevState.options.concat(option)
-          };
+          return { options: prevState.options.concat(option) };
         });
       }
     }
@@ -51,24 +50,34 @@ var IndecisionApp = function (_React$Component) {
     key: 'handleDelete',
     value: function handleDelete() {
       this.setState(function () {
-        return {
-          options: []
-        };
+        return { options: [] };
       });
+    }
+  }, {
+    key: 'handleDeleteOption',
+    value: function handleDeleteOption(option) {
+      console.log("hdo", option);
+      var index = this.state.options.indexOf(option);
+      this.setState(function (prevState) {
+        return { options: prevState.options.filter(function (opt) {
+            return opt != option;
+          }) };
+      });
+      console.log(this.state.options);
     }
   }, {
     key: 'render',
     value: function render() {
-      var title = 'Indecision App';
-      var subtitle = 'Put your life in the hands of a computer';
+      // const title = 'Indecision App'
+      // const subtitle = 'Put your life in the hands of a computer'
       return React.createElement(
         'div',
         null,
-        React.createElement(Header, { title: title, subtitle: subtitle }),
+        React.createElement(Header, null),
         React.createElement(Action, { hasOptions: this.state.options.length > 0,
           handlePick: this.handlePick }),
         React.createElement(Options, { options: this.state.options,
-          handleDelete: this.handleDelete }),
+          handleDelete: this.handleDelete, handleDeleteOption: this.handleDeleteOption }),
         React.createElement(Addoptions, { addOption: this.addOption })
       );
     }
@@ -76,16 +85,6 @@ var IndecisionApp = function (_React$Component) {
 
   return IndecisionApp;
 }(React.Component);
-// class Header extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <h1>{this.props.title}</h1>
-//         <h2>{this.props.subtitle}</h2>
-//       </div>
-//     );
-//   }
-// }
 
 var Header = function Header(props) {
   return React.createElement(
@@ -96,7 +95,7 @@ var Header = function Header(props) {
       null,
       props.title
     ),
-    React.createElement(
+    props.subtitle && React.createElement(
       'h2',
       null,
       props.subtitle
@@ -104,6 +103,10 @@ var Header = function Header(props) {
   );
 };
 
+Header.defaultProps = {
+  title: 'Indecision App',
+  subtitle: 'Put your life in the hands of a computer'
+};
 var Action = function Action(props) {
   return React.createElement(
     'div',
@@ -118,74 +121,40 @@ var Action = function Action(props) {
   );
 };
 
-// class Action extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <button onClick={this.props.handlePick}
-//          disabled = {!this.props.hasOptions}
-//         >What Should I do?</button>
-//       </div>
-//     )
-//   }
-// }
-
 var Options = function Options(props) {
   return React.createElement(
     'div',
     null,
-    React.createElement(Option, null),
-    props.options.map(function (option) {
-      return React.createElement(
-        'p',
-        { key: option },
-        option
-      );
-    }),
     React.createElement(
       'button',
       { onClick: props.handleDelete },
       'Remove All'
-    )
+    ),
+    props.options.map(function (option) {
+      return React.createElement(Option, { key: option, optionText: option, handleDeleteOption: props.handleDeleteOption });
+    })
   );
 };
 
-// class Options extends React.Component {
-//
-//   render() {
-//     return (
-//       <div>
-//         <Option/>
-//         {this.props.options.map((option) => { return <p key={option}>{option}</p>})}
-//         <button onClick={this.props.handleDelete}>Remove All</button>
-//       </div>
-//     )
-//   }
-// }
-//option add static text
-
-var Option = function Option() {
+var Option = function Option(props) {
 
   return React.createElement(
     'div',
     null,
+    ' ',
+    props.optionText,
     React.createElement(
-      'p',
-      null,
-      'Options:'
+      'button',
+      { onClick: function onClick(e) {
+          props.handleDeleteOption(props.optionText);
+        } },
+      'Remove Option'
     )
-  );
+  )
+  // <Option/>
+  // {props.options.map((option) => { return <p key={option}>{option} <button onClick={props.handleDeleteOption}>Remove Option</button></p>})}
+  ;
 };
-
-// class Option extends Options {
-//   render() {
-//     return (
-//       <div>
-//         <p>Options:</p>
-//       </div>
-//     )
-//   }
-// }
 
 var Addoptions = function (_React$Component2) {
   _inherits(Addoptions, _React$Component2);
@@ -209,9 +178,7 @@ var Addoptions = function (_React$Component2) {
       var option = e.target.elements.option.value;
       var error = this.props.addOption(option);
       this.setState(function () {
-        return {
-          error: error
-        };
+        return { error: error };
       });
     }
   }, {
@@ -241,17 +208,9 @@ var Addoptions = function (_React$Component2) {
 
   return Addoptions;
 }(React.Component);
-//Class options static text options component here
-//Add option componenet add text
 
-// const User = (props) => {
-//   return (
-//     <div>
-//       <p>Test</p>
-//       <p>{props.test}</p>
-//     </div>
-//   )
-// }
-
+IndecisionApp.defaultProps = {
+  options: []
+};
 
 ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
