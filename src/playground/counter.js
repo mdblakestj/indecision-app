@@ -8,6 +8,27 @@ class Counter extends React.Component {
       count: props.count
     };
   }
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('count')
+      const count = parseInt(json, 10);
+      if (count) {
+        this.setState(() => ({count}))
+      }
+
+    } catch(e) {
+
+    }
+
+  }
+  componentDidUpdate(prevProps,prevState) {
+    if(prevState.count !== this.state.count) {
+      const jsonOptions = JSON.stringify(this.state.count)
+      localStorage.setItem('count', jsonOptions);
+
+    }
+
+  }
   addOne() {
     this.setState((prevState)=>{
       return {
