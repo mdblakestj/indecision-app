@@ -5,14 +5,14 @@ class Counter extends React.Component {
     this.minusOne = this.minusOne.bind(this);
     this.reset = this.reset.bind(this);
     this.state = {
-      count: props.count
+      count: 0
     };
   }
   componentDidMount() {
     try {
       const json = localStorage.getItem('count')
       const count = parseInt(json, 10);
-      if (count) {
+      if (!isNaN(count)) {
         this.setState(() => ({count}))
       }
 
@@ -67,11 +67,11 @@ class Counter extends React.Component {
 //.use console.log
 //wire up onClick and bind
 
-Counter.defaultProps = {
-  count: 0
-}
+// Counter.defaultProps = {
+//   count: 0
+// }
 
-ReactDOM.render(<Counter count={-10}/>, document.getElementById('app'))
+ReactDOM.render(<Counter />, document.getElementById('app'))
 
 
 
