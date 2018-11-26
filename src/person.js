@@ -14,4 +14,7 @@ const canDrink = (x) => {
   }
 }
 
-export {isAdult, canDrink}
+const isSenior = (x) => x >= 65
+
+
+export {isAdult, canDrink, isSenior as default}
